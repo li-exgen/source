@@ -28,10 +28,9 @@ deployment:
       - git clone https://github.com/li-exgen/test2.git
       - ls -al src/webapp/SpringExample/target/*.jar
       - cp -f src/webapp/SpringExample/target/*.jar test2/
-      - cd test2
-      - pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'
-      - git commit -am "deploy from CircleCI"
-      - git push origin master
+      - cd test2 && pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'
+      - cd test2 && git commit -am "deploy from CircleCI"
+      - cd test2 && git push origin master
 
 general:
   branches:
