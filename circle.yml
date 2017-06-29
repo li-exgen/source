@@ -26,9 +26,9 @@ deployment:
     commands:
       - echo "staging deployment"
       - git clone https://github.com/li-exgen/test2.git
-      - ls -al src/webapp/SpringExample/target/*.jar
-      - cp -f src/webapp/SpringExample/target/*.jar test2/
-      - cd test2 && pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'
+      - cd test2 && git checkout release
+      - # cd test2 && pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'
+      - cp -f src/webapp/SpringExample/target/*.jar test2/module/webapp/
       - cd test2 && git config --global user.email li@exgen.co.jp
       - cd test2 && git config --global user.name li-exgen
       - cd test2 && git commit -am "deploy from CircleCI"
