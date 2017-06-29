@@ -1,0 +1,42 @@
+machine:
+  timezone:
+    Asia/Tokyo
+  java:
+    version:
+      openjdk8
+
+dependencies:
+  override:
+    - echo $CIRCLE_BUILD_NUM
+    - mvn -B -f src/webapp/SpringExample/pom.xml clean package findbugs:findbugs pmd:pmd -Dbuild.number=$CIRCLE_BUILD_NUM -Pdeploy -Dmaven.test.skip=true
+
+test:
+  override:
+    - echo "No Test"
+    - # pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'
+    - ls -al src/webapp/SpringExample/target/*.jar
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - echo "production deployment"
+  staging:
+    branch: develop
+    commands:
+      - echo "staging deployment"
+      - git clone https://github.com/li-exgen/test2.git
+      - cd test2 && git checkout release
+      - # cd test2 && pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'
+      - cp -f src/webapp/SpringExample/target/*.jar test2/module/webapp/
+      - cd test2 && git config --global user.email li@exgen.co.jp
+      - cd test2 && git config --global user.name li-exgen
+      - cd test2 && git commit -am "deploy from CircleCI"
+      - cd test2 && git push origin master
+
+general:
+  branches:
+    only:
+      - master
+      - develop
+
