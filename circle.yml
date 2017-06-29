@@ -21,21 +21,14 @@ deployment:
     branch: master
     commands:
       - echo "production deployment"
-      - git clone https://github.com/li-exgen/test2.git
-      - pwd
-      - ls -al src/webapp/SpringExample/target/*.jar
-      - cd test2
-      - cp -f ../src/webapp/SpringExample/target/*.jar ./
-      - git commit -am "deploy from CircleCI"
-      - git push origin master
   staging:
     branch: develop
     commands:
       - echo "staging deployment"
       - git clone https://github.com/li-exgen/test2.git
       - ls -al src/webapp/SpringExample/target/*.jar
+      - cp -f src/webapp/SpringExample/target/*.jar test2/
       - cd test2
-      - cp -f ../src/webapp/SpringExample/target/*.jar ./
       - git commit -am "deploy from CircleCI"
       - git push origin master
 
