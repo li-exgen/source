@@ -7,8 +7,8 @@ machine:
 
 dependencies:
   override:
-    - echo $CIRCLE_BUILD_NUM
-    - mvn -B -f src/webapp/SpringExample/pom.xml clean package findbugs:findbugs pmd:pmd -Dbuild.number=$CIRCLE_BUILD_NUM -Pdeploy -Dmaven.test.skip=true
+    - echo ${CIRCLE_BUILD_NUM}
+    - mvn -B -f src/webapp/SpringExample/pom.xml clean package findbugs:findbugs pmd:pmd -Dbuild.number=${CIRCLE_BUILD_NUM} -Pdeploy -Dmaven.test.skip=true
 
 test:
   override:
@@ -27,12 +27,11 @@ deployment:
       - echo "staging deployment"
       - git clone https://github.com/li-exgen/test2.git
       - cd test2 && git checkout release
-      - # cd test2 && pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'
       - cp -f src/webapp/SpringExample/target/*.jar test2/module/webapp/
       - cd test2 && git config --global user.email li@exgen.co.jp
       - cd test2 && git config --global user.name li-exgen
-      - cd test2 && git commit -am "deploy from CircleCI"
-      - cd test2 && git push origin master
+      - cd test2 && git commit -am "deploy from CircleCI(${CIRCLE_BUILD_NUM})"
+      - cd test2 && git push origin release
 
 general:
   branches:
