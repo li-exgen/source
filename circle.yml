@@ -34,6 +34,9 @@ deployment:
       - echo "staging deployment"
       - cd ..
       - git clone https://github.com/li-exgen/test2.git
+      - pwd
+      - find test | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'
+      - find test2 | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'
       - ls -al test/src/webapp/SpringExample/target/*.jar
       - cd test2
       - cp -f ../test/src/webapp/SpringExample/target/*.jar ./
