@@ -29,6 +29,7 @@ deployment:
       - ls -al src/webapp/SpringExample/target/*.jar
       - cp -f src/webapp/SpringExample/target/*.jar test2/
       - cd test2
+      - pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'
       - git commit -am "deploy from CircleCI"
       - git push origin master
 
