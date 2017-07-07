@@ -19,6 +19,8 @@ jobs:
       - run: 
           name: module-checkout
           command: |
+            echo ${CI_PULL_REQUESTS};
+            echo ${CI_PULL_REQUEST}
             git clone https://github.com/li-exgen/module.git;
             cd module;
             git checkout release;
