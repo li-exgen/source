@@ -1,0 +1,40 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8u131-jdk
+
+    environment:
+      TZ: "/usr/share/zoneinfo/Asia/Tokyo"
+
+    working_directory: ~/source
+
+    branches:
+      only:
+        - develop
+
+    steps:
+      - checkout
+
+      - run: 
+          name: module-checkout
+          command: |
+            git clone https://github.com/li-exgen/module.git;
+            cd module;
+            git checkout release;
+            cd ..;
+
+      - run: 
+          name: build-and-copy
+          command: |
+            mvn -B -f webapp/SpringExample/pom.xml clean package findbugs:findbugs pmd:pmd -Dbuild.number=${CIRCLE_BUILD_NUM} -Pdeploy -Dmaven.test.skip=true;
+            cp webapp/SpringExample/target/*.jar module/webapp/;
+
+      - run: 
+          name: module-deploy
+          command: |
+            cd module-all;
+            git config --global user.email nobody@nodomain;
+            git config --global user.name ${CIRCLE_USERNAME};
+            git commit -am "deploy from CircleCI(Number:${CIRCLE_BUILD_NUM})";
+            git push origin release;
