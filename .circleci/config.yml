@@ -19,6 +19,8 @@ jobs:
       - run: 
           name: module-checkout
           command: |
+            echo ${CI_PULL_REQUESTS};
+            echo ${CI_PULL_REQUEST}
             git clone https://github.com/li-exgen/module.git;
             cd module;
             git checkout release;
@@ -33,7 +35,7 @@ jobs:
       - run: 
           name: module-deploy
           command: |
-            cd module-all;
+            cd module;
             git config --global user.email nobody@nodomain;
             git config --global user.name ${CIRCLE_USERNAME};
             git commit -am "deploy from CircleCI(Number:${CIRCLE_BUILD_NUM})";
