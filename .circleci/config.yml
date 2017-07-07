@@ -35,7 +35,7 @@ jobs:
       - run: 
           name: module-deploy
           command: |
-            cd module-all;
+            cd module;
             git config --global user.email nobody@nodomain;
             git config --global user.name ${CIRCLE_USERNAME};
             git commit -am "deploy from CircleCI(Number:${CIRCLE_BUILD_NUM})";
