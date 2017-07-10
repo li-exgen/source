@@ -29,7 +29,7 @@ jobs:
       - run: 
           name: build-and-copy
           command: |
-            mvn -B -f webapp/SpringExample/pom.xml clean package findbugs:findbugs pmd:pmd -Dbuild.number=${CIRCLE_BUILD_NUM} -Pdeploy -Dmaven.test.skip=true;
+            mvn1 -B -f webapp/SpringExample/pom.xml clean package findbugs:findbugs pmd:pmd -Dbuild.number=${CIRCLE_BUILD_NUM} -Pdeploy -Dmaven.test.skip=true;
             cp webapp/SpringExample/target/*.jar module/webapp/;
 
       - run: 
